@@ -44,13 +44,9 @@ flowchart LR
 
 Architecture Diagram
 
-Screenshots
+### **Architecture Diagram**
+![Architecture](screenshots/architecture_diagram.png)
 
-(Replace placeholders with actual screenshots)
-
-Chat Interface
-
-Employee Results
 
 Setup & Installation
 Prerequisites
