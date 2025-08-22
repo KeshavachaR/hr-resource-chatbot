@@ -10,182 +10,196 @@ pinned: false
 HR Resource Query Chatbot
 Overview
 
-The HR Resource Query Chatbot is an AI-powered system designed to help HR managers quickly find suitable employees for projects. It uses a RAG (Retrieval-Augmented Generation) approach combining vector search (FAISS) with a local LLM (Ollama + llama3). The chatbot understands natural language queries like:
+The HR Resource Query Chatbot is an AI-powered assistant that helps HR teams quickly find employees based on natural language queries. It uses a Retrieval-Augmented Generation (RAG) pipeline to match employee profiles with HR queries and generate context-rich recommendations.
 
-“Find Python developers with 3+ years of healthcare experience, available in Bengaluru.”
+Example queries:
 
-and returns a ranked list of matching employees with reasoning.
+"Find Python developers with 3+ years of experience"
+
+"Who has worked on healthcare projects?"
+
+"Suggest people for a React Native project"
+
+This solution supports offline execution with local LLMs via Ollama, semantic search using FAISS, and a user-friendly Streamlit interface.
 
 Features
 
-🔎 Semantic search with HuggingFace embeddings + FAISS
-
-📝 LLM-powered answers via local Ollama (llama3)
-
-🛠️ Fallback lexical search (if embeddings/FAISS unavailable)
-
-🌐 FastAPI backend with clean /chat, /employees/search, /health endpoints
-
-💻 Streamlit frontend for conversational queries + advanced filters
-
-💾 Persistent FAISS index auto-rebuilt only when employee dataset changes
-
-🧩 Modular architecture (retriever, generator, search) for extensibility
-
-⚡ Optimized response time with cached embeddings
+✔ Natural Language HR Queries
+✔ Semantic Search with FAISS and Sentence-Transformers
+✔ Local LLM (Llama3) Integration via Ollama
+✔ Hybrid Retrieval (Semantic + Lexical Fallback)
+✔ Caching for Fast Startup (FAISS Index Reuse)
+✔ FastAPI Backend with REST APIs
+✔ Streamlit Frontend for Chat & Filtered Search
+✔ Offline Mode (No external APIs required)
 
 Architecture
-+------------------+        +--------------------+        +-------------------+
-|   Streamlit UI   | <----> |   FastAPI Backend  | <----> |  FAISS Vector DB  |
-+------------------+        +--------------------+        +-------------------+
-        |                              |                          |
-        |   /chat, /search APIs         |    Embeddings (SBERT)   |
-        |                              |                          |
-        +----------------------------------------------------------+
-                          Ollama (llama3 LLM)
+flowchart LR
+    A[User] --> B[Streamlit UI]
+    B --> C[FastAPI Backend]
+    C --> D[RAG Engine]
+    D --> E[FAISS + Embeddings]
+    D --> F[Ollama LLM]
+    D --> G[Employee Dataset (JSON)]
 
+Architecture Diagram
 
-Components
+Screenshots
 
-app/search.py → Lexical retrieval + query parsing
+(Replace placeholders with actual screenshots)
 
-app/retriever.py → Semantic search (embeddings + FAISS)
+Chat Interface
 
-app/generator.py → Local LLM (Ollama llama3) answer generation
-
-app/main.py → FastAPI endpoints
-
-frontend/streamlit_app.py → Chat UI + advanced filters
+Employee Results
 
 Setup & Installation
-1. Clone & Setup
-git clone <repo_url>
-cd hr_resource_chatbot_adv
-python -m venv .venv
-# Activate venv
-# Windows:
-.venv\Scripts\activate
-# Linux/macOS:
-source .venv/bin/activate
+Prerequisites
 
-2. Install Dependencies
-pip install -r requirements.txt
-pip install sentence-transformers faiss-cpu
+Python 3.9+
 
-3. Start Ollama
-ollama serve
+Ollama installed locally (Download Ollama
+)
+
+Models pulled:
+
 ollama pull llama3
 
-4. Run FastAPI Backend
-# Windows PowerShell
-$env:HR_MODE="semantic"
-$env:HR_EMBED_MODEL="sentence-transformers/all-MiniLM-L6-v2"
-$env:OLLAMA_URL="http://127.0.0.1:11434"
-$env:OLLAMA_MODEL="llama3"
+1. Clone the Repository
+git clone https://github.com/KeshavachaR/hr-resource-chatbot.git
+cd hr-resource-chatbot
 
-uvicorn app.main:app --reload
+2. Create Virtual Environment & Install Dependencies
+python -m venv .venv
+.venv\Scripts\activate    # Windows
+pip install --upgrade pip
+pip install -r requirements.txt
 
-5. Run Streamlit Frontend
-streamlit run frontend/streamlit_app.py
+3. Start Ollama Service
+
+In a separate terminal:
+
+ollama serve
+
+
+Optional warm-up:
+
+ollama run llama3 "hello"
+
+4. Start Backend (FastAPI)
+set HR_MODE=semantic
+uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+
+
+First run:
+
+Builds FAISS cache in store/.
+
+Subsequent runs will load cache for faster startup.
+
+5. Start Frontend (Streamlit)
+streamlit run frontend/streamlit_app.py --server.address 0.0.0.0 --server.port 8501
+
+
+Access UI at:
+http://localhost:8501
 
 API Documentation
+Endpoints
+1. Health Check
 GET /health
+Response: { "status": "ok" }
 
-Returns service status.
+2. Employee Search
+GET /employees/search?skills=Python,AWS&min_exp=3&availability=available
 
-{"status":"ok","mode":"semantic","semantic_available":true}
-
-POST /chat
-
-Natural language HR queries.
-
-Request:
-{"query": "Find Python developers with 3+ years in healthcare"}
 
 Response:
+
 {
-  "answer": "Alice Johnson is a strong fit ...",
-  "recommendations": [ {...}, {...} ]
+  "results": [
+    {
+      "id": 1,
+      "name": "Alice Johnson",
+      "skills": ["Python", "React", "AWS"],
+      "experience_years": 5,
+      "projects": ["E-commerce Platform", "Healthcare Dashboard"],
+      "availability": "available"
+    }
+  ]
 }
 
-GET /employees/search
+3. Chat Query
+POST /chat
+Body:
+{
+  "query": "Find Python developers with 3+ years experience",
+  "top_k": 5
+}
 
-Filter employees via structured params.
 
-/employees/search?skills=Python&min_experience=3&domain=healthcare&availability=available
+Response:
+
+{
+  "answer": "Based on your requirements, I found...",
+  "candidates": [ ... ]
+}
 
 AI Development Process
 
-AI Tools Used: ChatGPT (for code scaffolding, architecture design, and debugging)
+Tools Used:
 
-Phases Assisted:
+ChatGPT for architecture planning and code generation.
 
-Code generation: created initial FastAPI + Streamlit skeletons
+GitHub Copilot for inline coding assistance.
 
-Debugging: fixed serialization errors and parsing issues
+How AI Helped:
 
-Architecture decisions: advised semantic vs lexical fallback, Ollama integration
+Generated boilerplate code for FastAPI, Streamlit, and FAISS setup.
 
-Code Breakdown:
+Suggested improvements for caching and Ollama integration.
 
-~70% AI-assisted (initial drafts, helpers, embeddings integration)
+Manual Work:
 
-~30% hand-written (refinements, bug fixes, environment configs)
+Debugging FAISS index persistence.
 
-AI Innovations:
+Streamlit UI design and integration with backend.
 
-Hybrid RAG (semantic first, lexical fallback)
+AI Contribution: ~60% assisted, 40% manual refinement.
 
-Cached FAISS embeddings keyed by dataset hash
+Challenges:
 
-Challenges Solved Manually:
+Ollama timeout handling.
 
-Windows-specific env variable handling
-
-Streamlit session error debugging
+Ensuring offline capability without external APIs.
 
 Technical Decisions
 
-Local LLM (Ollama + llama3)
+Ollama for LLM:
 
-✔ Privacy: no data leaves machine
+Chosen for privacy, offline mode, and free usage vs. OpenAI API.
 
-✔ Cost: zero API fees
+Sentence-Transformers + FAISS:
 
-✔ Control: offline + configurable models
+Fast and accurate semantic search.
 
-✘ Heavier local setup compared to cloud APIs
+FAISS for vector similarity with caching for performance.
 
-FAISS + SBERT embeddings
+FastAPI + Streamlit:
 
-✔ Fast, scalable similarity search
-
-✔ Works offline
-
-✘ Requires extra installation (faiss-cpu)
-
-Fallback lexical retrieval
-
-✔ Ensures chatbot works even if FAISS/LLM unavailable
-
-✔ Improves robustness for edge cases
+Simple, clean stack for quick prototyping and local deployment.
 
 Future Improvements
 
-🔹 Add cross-encoder reranker for better precision
+Add conversation history for multi-turn context.
 
-🔹 Multi-turn conversation memory (track context across queries)
+Implement authentication & role-based access.
 
-🔹 Docker + docker-compose for one-click deployment
+Add real-time availability updates from a live DB.
 
-🔹 Support hybrid search (BM25 + semantic embeddings)
+Deploy Streamlit app with backend API on a single Docker container.
 
-🔹 Integration with company HRIS/ATS APIs
+Support multiple local LLM models (e.g., Mistral, Qwen).
 
-Demo
+[Live Demo](https://huggingface.co/spaces/keshav1236/hr-resource-chatbot)
 
-Run locally with Streamlit (http://localhost:8501)
-
-Example query:
-
-“Find React Native developers with 2+ years, available remotely in foodtech.”
+Local Run: Follow steps above.
