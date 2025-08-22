@@ -1,0 +1,439 @@
+{
+  "employees": [
+    {
+      "id": 1,
+      "name": "Alice Johnson",
+      "title": "Senior Python Developer",
+      "skills": [
+        "Python",
+        "Django",
+        "AWS",
+        "Docker"
+      ],
+      "experience_years": 6,
+      "projects": [
+        "E-commerce Platform",
+        "Healthcare Dashboard",
+        "Data Pipeline on AWS"
+      ],
+      "availability": "available",
+      "domains": [
+        "ecommerce",
+        "healthcare"
+      ],
+      "location": "Bengaluru"
+    },
+    {
+      "id": 2,
+      "name": "Michael Rodriguez",
+      "title": "ML Engineer",
+      "skills": [
+        "Machine Learning",
+        "scikit-learn",
+        "pandas",
+        "AWS"
+      ],
+      "experience_years": 4,
+      "projects": [
+        "Patient Risk Prediction System",
+        "Fraud Detection"
+      ],
+      "availability": "available",
+      "domains": [
+        "healthcare",
+        "fintech"
+      ],
+      "location": "Hyderabad"
+    },
+    {
+      "id": 3,
+      "name": "Sarah Chen",
+      "title": "Computer Vision Scientist",
+      "skills": [
+        "PyTorch",
+        "TensorFlow",
+        "Computer Vision",
+        "MLOps"
+      ],
+      "experience_years": 6,
+      "projects": [
+        "Medical Diagnosis Platform",
+        "Retail Shelf Scanner CV"
+      ],
+      "availability": "available",
+      "domains": [
+        "healthcare",
+        "retail"
+      ],
+      "location": "Remote"
+    },
+    {
+      "id": 4,
+      "name": "Rajesh Kumar",
+      "title": "Backend Engineer",
+      "skills": [
+        "Node.js",
+        "Express",
+        "MongoDB",
+        "Docker"
+      ],
+      "experience_years": 5,
+      "projects": [
+        "API Gateway",
+        "Order Management System"
+      ],
+      "availability": "busy",
+      "domains": [
+        "ecommerce"
+      ],
+      "location": "Chennai"
+    },
+    {
+      "id": 5,
+      "name": "Priya Singh",
+      "title": "Data Engineer",
+      "skills": [
+        "Python",
+        "Spark",
+        "Airflow",
+        "GCP"
+      ],
+      "experience_years": 5,
+      "projects": [
+        "Data Lakehouse",
+        "ETL for IoT"
+      ],
+      "availability": "available",
+      "domains": [
+        "iot",
+        "logistics"
+      ],
+      "location": "Pune"
+    },
+    {
+      "id": 6,
+      "name": "David Lee",
+      "title": "Full-Stack Developer",
+      "skills": [
+        "React",
+        "React Native",
+        "TypeScript",
+        "Node.js"
+      ],
+      "experience_years": 4,
+      "projects": [
+        "Mobile Banking App",
+        "Content Platform"
+      ],
+      "availability": "available",
+      "domains": [
+        "fintech",
+        "media"
+      ],
+      "location": "Remote"
+    },
+    {
+      "id": 7,
+      "name": "Anita Desai",
+      "title": "DevOps Engineer",
+      "skills": [
+        "AWS",
+        "Kubernetes",
+        "Terraform",
+        "Docker"
+      ],
+      "experience_years": 7,
+      "projects": [
+        "K8s Migration",
+        "Observability Stack"
+      ],
+      "availability": "busy",
+      "domains": [
+        "saas"
+      ],
+      "location": "Delhi"
+    },
+    {
+      "id": 8,
+      "name": "John Park",
+      "title": "Frontend Engineer",
+      "skills": [
+        "React",
+        "Next.js",
+        "Tailwind",
+        "Redux"
+      ],
+      "experience_years": 3,
+      "projects": [
+        "Marketing Website",
+        "Analytics Dashboard UI"
+      ],
+      "availability": "available",
+      "domains": [
+        "saas",
+        "analytics"
+      ],
+      "location": "Noida"
+    },
+    {
+      "id": 9,
+      "name": "Emily Davis",
+      "title": "Data Scientist",
+      "skills": [
+        "Python",
+        "NLP",
+        "Transformers",
+        "MLflow"
+      ],
+      "experience_years": 5,
+      "projects": [
+        "Chatbot NLU",
+        "Customer Churn Modelling"
+      ],
+      "availability": "available",
+      "domains": [
+        "telecom",
+        "saas"
+      ],
+      "location": "Remote"
+    },
+    {
+      "id": 10,
+      "name": "Carlos Alvarez",
+      "title": "Cloud Architect",
+      "skills": [
+        "Azure",
+        "AWS",
+        "GCP",
+        "Terraform"
+      ],
+      "experience_years": 8,
+      "projects": [
+        "Hybrid Cloud Landing Zone",
+        "Cost Optimization"
+      ],
+      "availability": "busy",
+      "domains": [
+        "enterprise"
+      ],
+      "location": "Mumbai"
+    },
+    {
+      "id": 11,
+      "name": "Nisha Gupta",
+      "title": "QA Automation Engineer",
+      "skills": [
+        "Selenium",
+        "Cypress",
+        "Python",
+        "CI/CD"
+      ],
+      "experience_years": 4,
+      "projects": [
+        "Test Automation for Web",
+        "Mobile QA"
+      ],
+      "availability": "available",
+      "domains": [
+        "saas",
+        "ecommerce"
+      ],
+      "location": "Pune"
+    },
+    {
+      "id": 12,
+      "name": "Omar Haddad",
+      "title": "MLOps Engineer",
+      "skills": [
+        "Kubeflow",
+        "AWS",
+        "Docker",
+        "FastAPI"
+      ],
+      "experience_years": 5,
+      "projects": [
+        "Model Serving Platform",
+        "Feature Store"
+      ],
+      "availability": "available",
+      "domains": [
+        "saas"
+      ],
+      "location": "Remote"
+    },
+    {
+      "id": 13,
+      "name": "Laura Kim",
+      "title": "React Native Developer",
+      "skills": [
+        "React Native",
+        "TypeScript",
+        "Expo",
+        "GraphQL"
+      ],
+      "experience_years": 3,
+      "projects": [
+        "Fitness Tracker App",
+        "Food Delivery App"
+      ],
+      "availability": "available",
+      "domains": [
+        "healthtech",
+        "foodtech"
+      ],
+      "location": "Remote"
+    },
+    {
+      "id": 14,
+      "name": "Vikram Patel",
+      "title": "Data Analyst",
+      "skills": [
+        "SQL",
+        "PowerBI",
+        "Python",
+        "Excel"
+      ],
+      "experience_years": 2,
+      "projects": [
+        "Sales Analytics",
+        "Supply Chain KPIs"
+      ],
+      "availability": "available",
+      "domains": [
+        "retail",
+        "logistics"
+      ],
+      "location": "Ahmedabad"
+    },
+    {
+      "id": 15,
+      "name": "Maya Rao",
+      "title": "Backend Engineer",
+      "skills": [
+        "Python",
+        "FastAPI",
+        "PostgreSQL",
+        "Redis"
+      ],
+      "experience_years": 5,
+      "projects": [
+        "HRIS API",
+        "Billing Microservice"
+      ],
+      "availability": "available",
+      "domains": [
+        "hrtech",
+        "fintech"
+      ],
+      "location": "Bengaluru"
+    },
+    {
+      "id": 16,
+      "name": "Arjun Mehta",
+      "title": "Security Engineer",
+      "skills": [
+        "AppSec",
+        "Threat Modelling",
+        "AWS",
+        "Burp Suite"
+      ],
+      "experience_years": 6,
+      "projects": [
+        "Security Hardening",
+        "SOC2 Readiness"
+      ],
+      "availability": "busy",
+      "domains": [
+        "saas",
+        "compliance"
+      ],
+      "location": "Gurugram"
+    },
+    {
+      "id": 17,
+      "name": "Sofia Petrova",
+      "title": "NLP Engineer",
+      "skills": [
+        "spaCy",
+        "Transformers",
+        "FastAPI",
+        "Vector DB"
+      ],
+      "experience_years": 4,
+      "projects": [
+        "Document Q&A",
+        "Contract Analysis"
+      ],
+      "availability": "available",
+      "domains": [
+        "legaltech"
+      ],
+      "location": "Remote"
+    },
+    {
+      "id": 18,
+      "name": "Harish Iyer",
+      "title": "Data Engineer",
+      "skills": [
+        "AWS",
+        "Glue",
+        "Athena",
+        "Python"
+      ],
+      "experience_years": 6,
+      "projects": [
+        "Streaming Ingestion",
+        "Data Warehouse"
+      ],
+      "availability": "available",
+      "domains": [
+        "adtech"
+      ],
+      "location": "Bengaluru"
+    },
+    {
+      "id": 19,
+      "name": "Zoey Miller",
+      "title": "Frontend Engineer",
+      "skills": [
+        "Vue",
+        "React",
+        "TypeScript",
+        "Vite"
+      ],
+      "experience_years": 3,
+      "projects": [
+        "Design System",
+        "Landing Page A/B Testing"
+      ],
+      "availability": "available",
+      "domains": [
+        "saas",
+        "marketing"
+      ],
+      "location": "Remote"
+    },
+    {
+      "id": 20,
+      "name": "Ibrahim Khan",
+      "title": "Solutions Engineer",
+      "skills": [
+        "Pre-sales",
+        "Python",
+        "AWS",
+        "Demo Engineering"
+      ],
+      "experience_years": 7,
+      "projects": [
+        "POCs for Prospects",
+        "RFP Responses"
+      ],
+      "availability": "available",
+      "domains": [
+        "saas",
+        "enterprise"
+      ],
+      "location": "Bengaluru"
+    }
+  ]
+}
