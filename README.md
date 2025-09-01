@@ -59,7 +59,7 @@ uvicorn app.main:app --reload --port 8000
 
 ### 4.Run Frontend
 streamlit run frontend/streamlit_app.py
-```
+
 🧪 API Documentation
 ✅ GET /health
 
