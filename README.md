@@ -7,195 +7,177 @@ sdk: docker
 pinned: false
 ---
 
-HR Resource Query Chatbot
-Overview
+# 🧑‍💼 HR Resource Chatbot
 
-The HR Resource Query Chatbot is an AI-powered assistant that helps HR teams quickly find employees based on natural language queries. It uses a Retrieval-Augmented Generation (RAG) pipeline to match employee profiles with HR queries and generate context-rich recommendations.
+An AI-powered chatbot designed to query structured HR datasets efficiently using semantic search and natural language generation. Built with a modular architecture featuring a FastAPI backend, Streamlit frontend, and local LLM support (Ollama + Llama3).
 
-Example queries:
+---
 
-"Find Python developers with 3+ years of experience"
+## 🚀 Features
 
-"Who has worked on healthcare projects?"
+- 🔍 **Hybrid Retrieval**: FAISS-based semantic search with optional lexical fallback.
+- 🤖 **Local LLM Integration**: Uses Llama3 (via Ollama) for context-aware, natural language responses.
+- ⚡ **FastAPI Backend**: Clean REST API for chat and health endpoints.
+- 🎨 **Streamlit Frontend**: Interactive and user-friendly chat interface.
+- 🛠️ **Resilient Design**: Graceful fallback to semantic-only mode if LLM is unavailable.
+- 🖥️ **Flexible Deployment**: Run locally, in Docker, or on Hugging Face Spaces (GPU/CPU).
 
-"Suggest people for a React Native project"
+---
 
-This solution supports offline execution with local LLMs via Ollama, semantic search using FAISS, and a user-friendly Streamlit interface.
+## 🧱 Architecture
 
-Features
+**Core Components:**
 
-✔ Natural Language HR Queries
-✔ Semantic Search with FAISS and Sentence-Transformers
-✔ Local LLM (Llama3) Integration via Ollama
-✔ Hybrid Retrieval (Semantic + Lexical Fallback)
-✔ Caching for Fast Startup (FAISS Index Reuse)
-✔ FastAPI Backend with REST APIs
-✔ Streamlit Frontend for Chat & Filtered Search
-✔ Offline Mode (No external APIs required)
+- **Data Layer** → `employees.json` structured HR dataset.
+- **Retriever** → SentenceTransformers + FAISS for embedding-based semantic search.
+- **Generator** → Local LLM (Llama3 via Ollama) for answer synthesis.
+- **API Layer** → FastAPI app with `/chat` and `/health` endpoints.
+- **UI Layer** → Streamlit-based frontend for user interaction.
 
-Architecture
-flowchart LR
-    A[User] --> B[Streamlit UI]
-    B --> C[FastAPI Backend]
-    C --> D[RAG Engine]
-    D --> E[FAISS + Embeddings]
-    D --> F[Ollama LLM]
-    D --> G[Employee Dataset (JSON)]
+**Deployment Modes:**
 
-Architecture Diagram
+| Mode        | Description                                  |
+|-------------|----------------------------------------------|
+| 🟢 GPU      | Full chatbot with Ollama + Llama3            |
+| 🔵 CPU      | Fallback chatbot (semantic search only)      |
+| ⚪ ZeroGPU  | Limited CPU-only demo (LLM not available)     |
 
-### **Architecture Diagram**
-![Architecture](screenshots/architecture_diagram.png)
+---
 
+## 🛠️ Setup & Installation
 
-Setup & Installation
-Prerequisites
+### 1. Clone the Repository
+git clone https://huggingface.co/spaces/keshav1236/hr-resource-chatbot
 
-Python 3.9+
-
-Ollama installed locally (Download Ollama
-)
-
-Models pulled:
-
-ollama pull llama3
-
-1. Clone the Repository
-git clone https://github.com/KeshavachaR/hr-resource-chatbot.git
 cd hr-resource-chatbot
 
-2. Create Virtual Environment & Install Dependencies
-python -m venv .venv
-.venv\Scripts\activate    # Windows
-pip install --upgrade pip
+### 2.Install Dependencies
 pip install -r requirements.txt
 
-3. Start Ollama Service
+### 3.Run Backend(FastAPI)
+uvicorn app.main:app --reload --port 8000
 
-In a separate terminal:
+### 4.Run Frontend
+streamlit run frontend/streamlit_app.py
+```
+🧪 API Documentation
+✅ GET /health
 
-ollama serve
-
-
-Optional warm-up:
-
-ollama run llama3 "hello"
-
-4. Start Backend (FastAPI)
-set HR_MODE=semantic
-uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
-
-
-First run:
-
-Builds FAISS cache in store/.
-
-Subsequent runs will load cache for faster startup.
-
-5. Start Frontend (Streamlit)
-streamlit run frontend/streamlit_app.py --server.address 0.0.0.0 --server.port 8501
-
-
-Access UI at:
-http://localhost:8501
-
-API Documentation
-Endpoints
-1. Health Check
-GET /health
-Response: { "status": "ok" }
-
-2. Employee Search
-GET /employees/search?skills=Python,AWS&min_exp=3&availability=available
-
+Health check endpoint.
 
 Response:
 
 {
-  "results": [
-    {
-      "id": 1,
-      "name": "Alice Johnson",
-      "skills": ["Python", "React", "AWS"],
-      "experience_years": 5,
-      "projects": ["E-commerce Platform", "Healthcare Dashboard"],
-      "availability": "available"
-    }
-  ]
+  "status": "ok",
+  "mode": "semantic",
+  "semantic_available": true
 }
 
-3. Chat Query
-POST /chat
-Body:
+💬 POST /chat
+
+Submit an HR query.
+
+Request:
+
 {
-  "query": "Find Python developers with 3+ years experience",
-  "top_k": 5
+  "query": "Find Python developers in Bengaluru"
 }
 
 
 Response:
 
 {
-  "answer": "Based on your requirements, I found...",
-  "candidates": [ ... ]
+  "answer": "Found 2 Python developers with 3+ years experience in Bengaluru."
 }
 
-AI Development Process
+📁 Example HR Dataset Structure (employees.json)
+[
+  {
+    "id": 1,
+    "name": "Alice Johnson",
+    "title": "Senior Python Developer",
+    "skills": [
+      "Python",
+      "Django",
+      "AWS",
+      "Docker"
+    ],
+    "experience_years": 6,
+    "projects": [
+      "E-commerce Platform",
+      "Healthcare Dashboard",
+      "Data Pipeline on AWS"
+    ],
+    "availability": "available",
+    "domains": [
+      "ecommerce",
+      "healthcare"
+    ],
+    "location": "Bengaluru"
+  },
+  {
+    "id": 2,
+    "name": "Michael Rodriguez",
+    "title": "ML Engineer",
+    "skills": [
+      "Machine Learning",
+      "scikit-learn",
+      "pandas",
+      "AWS"
+    ],
+    "experience_years": 4,
+    "projects": [
+      "Patient Risk Prediction System",
+      "Fraud Detection"
+    ],
+    "availability": "available",
+    "domains": [
+      "healthcare",
+      "fintech"
+    ],
+    "location": "Hyderabad"
+  }
+]
 
-Tools Used:
 
-ChatGPT for architecture planning and code generation.
+📌 Technical Stack
 
-GitHub Copilot for inline coding assistance.
+LLM Serving → Ollama
+ with LLaMA3
 
-How AI Helped:
+Semantic Search → FAISS + SentenceTransformers
 
-Generated boilerplate code for FastAPI, Streamlit, and FAISS setup.
+Backend API → FastAPI
 
-Suggested improvements for caching and Ollama integration.
+Frontend UI → Streamlit
 
-Manual Work:
+Containerization → Docker (GPU + CPU Dockerfiles)
 
-Debugging FAISS index persistence.
+Deployment → Hugging Face Spaces (ZeroGPU, CPU, or GPU modes)
 
-Streamlit UI design and integration with backend.
+💡 Future Enhancements
 
-AI Contribution: ~60% assisted, 40% manual refinement.
+🔐 Add authentication for secure query access.
 
-Challenges:
+📂 Support uploading custom HR datasets.
 
-Ollama timeout handling.
+📊 Add filters and visual HR analytics to the UI.
 
-Ensuring offline capability without external APIs.
+⚙️ Optimize Ollama LLM serving for faster responses.
 
-Technical Decisions
+🧠 Example Queries
 
-Ollama for LLM:
+"List Java developers with 5+ years of experience."
 
-Chosen for privacy, offline mode, and free usage vs. OpenAI API.
+"Who are the data scientists in New York?"
 
-Sentence-Transformers + FAISS:
+"Find remote HR managers in Bengaluru."
 
-Fast and accurate semantic search.
+📦 Docker Support
 
-FAISS for vector similarity with caching for performance.
+The Hugging Face Space uses the provided Dockerfile (for GPU).
+For CPU-only environments, use Dockerfile.cpu in Settings → Dockerfile path.
 
-FastAPI + Streamlit:
+🤝 Contributing
 
-Simple, clean stack for quick prototyping and local deployment.
-
-Future Improvements
-
-Add conversation history for multi-turn context.
-
-Implement authentication & role-based access.
-
-Add real-time availability updates from a live DB.
-
-Deploy Streamlit app with backend API on a single Docker container.
-
-Support multiple local LLM models (e.g., Mistral, Qwen).
-
-[Live Demo](https://huggingface.co/spaces/keshav1236/hr-resource-chatbot)
-
-Local Run: Follow steps above.
+PRs and feedback are welcome! Please open an issue for feature requests or bugs.
